@@ -67,6 +67,12 @@ export default function QuestionDetailPage() {
 
         {/* Answer Form */}
         <div className="border-t border-gray-200 pt-8">
+          <div className="mb-6">
+            <h2 className="text-section-title text-gray-900 mb-2">Your Answer</h2>
+            <p className="text-body text-gray-600">
+              Share your knowledge and help the community by answering this question.
+            </p>
+          </div>
           <AnswerForm questionId={question.id} />
         </div>
       </div>

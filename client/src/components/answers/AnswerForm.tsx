@@ -84,14 +84,20 @@ export function AnswerForm({ questionId, onSuccess }: AnswerFormProps) {
     return (
       <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
         <p className="text-gray-600 mb-4">You must be logged in to post an answer.</p>
-        <Button variant="outline">Sign In</Button>
+        <Button 
+          variant="outline" 
+          onClick={() => {
+            window.location.href = '/login?mode=signin';
+          }}
+        >
+          Sign In
+        </Button>
       </div>
     );
   }
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
-      <h4 className="text-lg font-medium text-gray-900 mb-4">Your Answer</h4>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="mb-4">
           <Label htmlFor="content" className="sr-only">Answer content</Label>
@@ -112,7 +118,11 @@ export function AnswerForm({ questionId, onSuccess }: AnswerFormProps) {
           <div className="text-sm text-gray-500">
             <span>{form.watch('content')?.length || 0} characters</span>
           </div>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button 
+            type="submit" 
+            disabled={isSubmitting}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          >
             {isSubmitting ? 'Posting...' : 'Post Your Answer'}
           </Button>
         </div>

@@ -42,8 +42,8 @@ export function Header() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // TODO: Implement search functionality
-      console.log('Search for:', searchQuery);
+      // Navigate to home page with search query
+      setLocation(`/?search=${encodeURIComponent(searchQuery)}`);
     }
   };
 
@@ -128,10 +128,10 @@ export function Header() {
               </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" onClick={() => setLocation('/login')}>
+                <Button variant="ghost" onClick={() => setLocation('/login?mode=signin')}>
                   Sign In
                 </Button>
-                <Button onClick={() => setLocation('/login')}>
+                <Button onClick={() => setLocation('/login?mode=signup')}>
                   Sign Up
                 </Button>
               </div>

@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { SignupForm } from '@/components/auth/SignupForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
-import { useEffect } from 'react';
 
 export default function Login() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
+  
+  // Check URL parameters to determine if signup or signin mode
+  const urlParams = new URLSearchParams(window.location.search);
+  const mode = urlParams.get('mode');
+  const [isLogin, setIsLogin] = useState(mode !== 'signup');
 
   useEffect(() => {
     if (user) {

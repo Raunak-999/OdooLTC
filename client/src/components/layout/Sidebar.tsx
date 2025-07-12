@@ -59,6 +59,9 @@ export function Sidebar() {
                   key={tag}
                   variant="secondary"
                   className="bg-blue-100 text-blue-800 cursor-pointer hover:bg-blue-200 transition-colors"
+                  onClick={() => {
+                    window.location.href = `/?search=${encodeURIComponent(tag)}`;
+                  }}
                 >
                   {tag}
                 </Badge>

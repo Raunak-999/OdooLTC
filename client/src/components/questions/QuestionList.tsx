@@ -2,9 +2,51 @@ import { useQuestions } from '@/hooks/useQuestions';
 import { QuestionCard } from './QuestionCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
+import { useMemo } from 'react';
 
-export function QuestionList() {
+interface QuestionListProps {
+  searchQuery?: string;
+  sortBy?: 'newest' | 'oldest' | 'most-voted' | 'most-answered' | 'unanswered';
+}
+
+export function QuestionList({ searchQuery, sortBy = 'newest' }: QuestionListProps) {
   const { questions, loading, error } = useQuestions();
+
+  const filteredAndSortedQuestions = useMemo(() => {
+    let filtered = questions;
+
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = questions.filter(question => 
+        question.title.toLowerCase().includes(query) ||
+        question.description.toLowerCase().includes(query) ||
+        question.tags.some(tag => tag.toLowerCase().includes(query))
+      );
+    }
+
+    // Apply sorting
+    const sorted = [...filtered];
+    switch (sortBy) {
+      case 'oldest':
+        sorted.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        break;
+      case 'most-voted':
+        sorted.sort((a, b) => b.voteCount - a.voteCount);
+        break;
+      case 'most-answered':
+        sorted.sort((a, b) => b.answerCount - a.answerCount);
+        break;
+      case 'unanswered':
+        return sorted.filter(q => q.answerCount === 0);
+      case 'newest':
+      default:
+        sorted.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+    }
+
+    return sorted;
+  }, [questions, searchQuery, sortBy]);
 
   if (loading) {
     return (
@@ -49,7 +91,15 @@ export function QuestionList() {
     );
   }
 
-  if (questions.length === 0) {
+  if (filteredAndSortedQuestions.length === 0) {
+    if (searchQuery) {
+      return (
+        <div className="text-center p-8 text-gray-500">
+          <h3 className="text-lg font-medium mb-2">No questions found</h3>
+          <p>No questions match your search for "{searchQuery}"</p>
+        </div>
+      );
+    }
     return (
       <div className="text-center p-8 text-gray-500">
         <h3 className="text-lg font-medium mb-2">No questions yet</h3>
@@ -60,7 +110,7 @@ export function QuestionList() {
 
   return (
     <div className="space-y-4">
-      {questions.map((question) => (
+      {filteredAndSortedQuestions.map((question) => (
         <QuestionCard key={question.id} question={question} />
       ))}
     </div>

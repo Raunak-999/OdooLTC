@@ -47,7 +47,15 @@ export function QuestionCard({ question }: QuestionCardProps) {
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-4">
               {question.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="bg-blue-100 text-blue-800">
+                <Badge 
+                  key={tag} 
+                  variant="secondary" 
+                  className="bg-blue-100 text-blue-800 hover:bg-blue-200 cursor-pointer transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = `/?search=${encodeURIComponent(tag)}`;
+                  }}
+                >
                   {tag}
                 </Badge>
               ))}
