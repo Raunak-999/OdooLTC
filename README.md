@@ -7,6 +7,8 @@
 
 > **A modern, responsive question-and-answer platform that supports collaborative learning and structured knowledge sharing.**
 
+Demo Link - https://stackit-adc0b.web.app/
+
 ---
 
 ## 📋 Problem Statement
