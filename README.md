@@ -321,33 +321,3 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pul
 4. Push to branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🎉 Acknowledgments
-
-- **shadcn/ui** for the excellent component library
-- **Firebase** for the robust backend-as-a-service platform
-- **Tailwind CSS** for the utility-first styling approach
-- **React Team** for the amazing framework
-
----
-
-## 📞 Support
-
-If you have any questions or need support, please:
-
-1. Check our [Documentation](docs/)
-2. Search existing [Issues](../../issues)
-3. Create a new [Issue](../../issues/new)
-
----
-
-**Built with ❤️ by Team StackIt**
-
-*This project was developed as part of a hackathon submission, demonstrating modern web development practices, collaborative development, and professional software engineering standards.* 
