@@ -1,0 +1,799 @@
+# Complete Replit Prompt for StackIt MVP Development - Firebase Integrated
+
+## 🎯 Project Overview
+
+Create a complete **StackIt Q&A Platform MVP** - a modern, professional question and answer forum built with React, TypeScript, Firebase, and Tailwind CSS. This is for a hackathon with a 6-hour development window.
+
+**CRITICAL REQUIREMENTS:**
+- **DO NOT use any Replit database services**
+- **MUST use my existing Firebase project configuration provided below**
+- **Generate code that runs locally without Replit dependencies**
+- **Create a complete, production-ready MVP**
+- **Include all environment setup instructions**
+- **Focus on functionality first, then polish**
+
+## 🏗️ Technical Stack & Setup
+
+### Core Technologies
+```
+Frontend: React 18 + TypeScript + Vite
+Backend: Firebase (Firestore + Auth)
+Styling: Tailwind CSS
+Forms: React Hook Form
+UI Icons: Heroicons
+Notifications: React Hot Toast
+Date Handling: date-fns
+Deployment: Local development ready
+```
+
+### Project Structure to Create
+```
+stackit-mvp/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── ui/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Card.tsx
+│   │   │   └── LoadingSpinner.tsx
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Navigation.tsx
+│   │   │   └── Layout.tsx
+│   │   ├── auth/
+│   │   │   ├── LoginForm.tsx
+│   │   │   ├── SignupForm.tsx
+│   │   │   └── ProtectedRoute.tsx
+│   │   ├── questions/
+│   │   │   ├── QuestionCard.tsx
+│   │   │   ├── QuestionList.tsx
+│   │   │   ├── QuestionForm.tsx
+│   │   │   └── QuestionDetail.tsx
+│   │   ├── answers/
+│   │   │   ├── AnswerForm.tsx
+│   │   │   ├── AnswerList.tsx
+│   │   │   └── AnswerItem.tsx
+│   │   └── voting/
+│   │       └── VoteButtons.tsx
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   ├── Login.tsx
+│   │   ├── AskQuestion.tsx
+│   │   ├── QuestionDetailPage.tsx
+│   │   └── Profile.tsx
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useQuestions.ts
+│   │   ├── useAnswers.ts
+│   │   └── useVotes.ts
+│   ├── services/
+│   │   ├── firebase.ts
+│   │   ├── auth.ts
+│   │   ├── questions.ts
+│   │   ├── answers.ts
+│   │   └── votes.ts
+│   ├── contexts/
+│   │   └── AuthContext.tsx
+│   ├── types/
+│   │   └── index.ts
+│   ├── utils/
+│   │   ├── validation.ts
+│   │   └── formatters.ts
+│   ├── styles/
+│   │   └── globals.css
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
+├── tailwind.config.js
+├── postcss.config.js
+├── .env.example
+├── .env.local (to be created)
+├── .gitignore
+└── README.md
+```
+
+## 📋 MVP Features to Implement (Priority Order)
+
+### Phase 1: Authentication System (Must Have)
+1. **User Registration & Login**
+   - Email/password authentication using Firebase Auth
+   - Sign up form with email, password, display name
+   - Login form with email and password
+   - Form validation with proper error handling
+   - User profile creation in Firestore
+   - Logout functionality with state cleanup
+
+2. **Protected Routes**
+   - Route protection for authenticated users only
+   - Redirect to login if not authenticated
+   - Persistent authentication state
+   - User context throughout the app
+
+### Phase 2: Question Management (Must Have)
+1. **Ask Question Feature**
+   - Question creation form with validation
+   - Fields: title (10-255 chars), description (50+ chars), tags (1-5 required)
+   - Rich text support for description (basic formatting)
+   - Tag input with manual entry
+   - Save to Firestore with proper data structure
+   - Redirect to question detail after creation
+   - Real-time question list updates
+
+2. **Questions List Display**
+   - Display all questions in reverse chronological order
+   - Show: title, tags, author, vote count, answer count, timestamp
+   - Clickable question cards to navigate to detail view
+   - Responsive grid layout for desktop, stack for mobile
+   - Pagination or load more functionality
+   - Loading states and error handling
+
+3. **Question Detail Page**
+   - Full question display with formatted description
+   - Author information and creation timestamp
+   - Vote buttons and current vote count
+   - All answers displayed below question
+   - Answer submission form (for authenticated users)
+   - Real-time updates for new answers and votes
+
+### Phase 3: Answer System (Must Have)
+1. **Answer Submission**
+   - Answer form with text area and formatting options
+   - Character count and validation (minimum 10 characters)
+   - Submit answers to specific questions
+   - Real-time answer display without page refresh
+   - Author attribution and timestamp
+   - Edit functionality for answer authors
+
+2. **Answer Display**
+   - List all answers under each question
+   - Show answer content with proper formatting
+   - Display answer author and creation time
+   - Vote buttons for each answer
+   - Sort answers by vote count (highest first)
+   - Accept answer functionality for question authors
+
+### Phase 4: Voting System (Must Have)
+1. **Vote Functionality**
+   - Upvote/downvote buttons for questions and answers
+   - Display current vote count with proper styling
+   - Prevent users from voting on their own content
+   - One vote per user per question/answer (can change vote)
+   - Real-time vote count updates across all users
+   - Visual feedback for user's current vote state
+
+2. **Vote State Management**
+   - Track user's vote state (upvoted/downvoted/none)
+   - Visual indicators for current vote (highlighted buttons)
+   - Update vote counts immediately on vote change
+   - Persist vote state across page refreshes
+   - Handle vote conflicts and errors gracefully
+
+## 🔥 Firebase Configuration & Setup
+
+### Exact Firebase Credentials (Use These)
+```
+VITE_FIREBASE_API_KEY=AIzaSyDnfD3C5jwyzZ3YslFBYFXYKnePvug5m6s
+VITE_FIREBASE_AUTH_DOMAIN=stackit-adc0b.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=stackit-adc0b
+VITE_FIREBASE_STORAGE_BUCKET=stackit-adc0b.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=116297476119
+VITE_FIREBASE_APP_ID=1:116297476119:web:bf33516fd9ee11008a1452
+VITE_FIREBASE_MEASUREMENT_ID=G-0W9H0VVS38
+```
+
+### Firestore Database Structure
+
+#### Users Collection - Path: `/users/{userId}`
+```typescript
+interface User {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string;
+  bio?: string;
+  reputation: number;
+  questionsAsked: number;
+  answersGiven: number;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+```
+
+#### Questions Collection - Path: `/questions/{questionId}`
+```typescript
+interface Question {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  authorId: string;
+  authorName: string;
+  authorPhotoURL?: string;
+  voteCount: number;
+  answerCount: number;
+  viewCount: number;
+  acceptedAnswerId?: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  isResolved: boolean;
+}
+```
+
+#### Answers Collection - Path: `/answers/{answerId}`
+```typescript
+interface Answer {
+  id: string;
+  questionId: string;
+  content: string;
+  authorId: string;
+  authorName: string;
+  authorPhotoURL?: string;
+  voteCount: number;
+  isAccepted: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+```
+
+#### Votes Collection - Path: `/votes/{voteId}`
+```typescript
+interface Vote {
+  id: string;
+  userId: string;
+  targetId: string; // questionId or answerId
+  targetType: 'question' | 'answer';
+  voteType: 1 | -1; // 1 for upvote, -1 for downvote
+  createdAt: Timestamp;
+}
+```
+
+#### Tags Collection - Path: `/tags/{tagName}`
+```typescript
+interface Tag {
+  name: string;
+  description?: string;
+  usageCount: number;
+  createdAt: Timestamp;
+}
+```
+
+#### Notifications Collection - Path: `/notifications/{notificationId}`
+```typescript
+interface Notification {
+  id: string;
+  userId: string;
+  type: 'answer' | 'vote' | 'mention' | 'acceptance';
+  title: string;
+  message: string;
+  isRead: boolean;
+  relatedQuestionId?: string;
+  relatedAnswerId?: string;
+  createdAt: Timestamp;
+}
+```
+
+### Firebase Security Rules
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read all profiles, write their own
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Questions are public read, authenticated write
+    match /questions/{questionId} {
+      allow read: if true;
+      allow create: if request.auth != null && 
+        request.auth.uid == request.resource.data.authorId;
+      allow update: if request.auth != null && 
+        request.auth.uid == resource.data.authorId;
+      allow delete: if request.auth != null && 
+        request.auth.uid == resource.data.authorId;
+    }
+    
+    // Answers are public read, authenticated write
+    match /answers/{answerId} {
+      allow read: if true;
+      allow create: if request.auth != null && 
+        request.auth.uid == request.resource.data.authorId;
+      allow update: if request.auth != null && 
+        request.auth.uid == resource.data.authorId;
+      allow delete: if request.auth != null && 
+        request.auth.uid == resource.data.authorId;
+    }
+    
+    // Users can manage their own votes
+    match /votes/{voteId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null && 
+        request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Tags are public read, authenticated write
+    match /tags/{tagName} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Notifications are private to each user
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId;
+    }
+  }
+}
+```
+
+## 🎨 Design System & UI Guidelines
+
+### Color Palette (Use These Exact Values)
+```css
+:root {
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --green-500: #10b981;
+  --green-600: #059669;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --yellow-500: #f59e0b;
+}
+```
+
+### Typography Guidelines
+```css
+/* Headers */
+.text-page-title { font-size: 2.25rem; font-weight: 700; line-height: 1.2; }
+.text-section-title { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+.text-card-title { font-size: 1.125rem; font-weight: 500; line-height: 1.4; }
+
+/* Body Text */
+.text-body { font-size: 1rem; line-height: 1.6; }
+.text-caption { font-size: 0.875rem; color: var(--gray-500); }
+.text-small { font-size: 0.75rem; color: var(--gray-600); }
+
+/* Interactive Elements */
+.text-link { color: var(--primary-600); text-decoration: none; }
+.text-link:hover { color: var(--primary-700); text-decoration: underline; }
+```
+
+### Component Design Specifications
+
+#### Question Card Layout
+- **Container**: White background, rounded-lg (8px), shadow-sm, border border-gray-200
+- **Padding**: p-6 (24px all sides)
+- **Title**: text-card-title, text-gray-900, mb-3
+- **Description**: text-body, text-gray-700, mb-4, max 2 lines with ellipsis
+- **Tags**: Flex wrap, gap-2, each tag: px-3 py-1, bg-blue-100, text-blue-800, rounded-full, text-small
+- **Metadata**: Flex justify-between, text-caption, items-center
+- **Vote Section**: Flex flex-col items-center, space-y-1
+
+#### Form Styling
+- **Labels**: text-sm font-medium text-gray-700 mb-2
+- **Inputs**: w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+- **Textareas**: Same as inputs, min-h-32 (128px)
+- **Buttons**: px-4 py-2 rounded-md font-medium transition-colors
+  - Primary: bg-blue-600 text-white hover:bg-blue-700
+  - Secondary: bg-gray-200 text-gray-900 hover:bg-gray-300
+- **Error States**: border-red-300 focus:ring-red-500 focus:border-red-500
+- **Error Messages**: text-red-600 text-sm mt-1
+
+#### Navigation Header
+- **Container**: bg-white border-b border-gray-200 sticky top-0 z-50
+- **Inner**: max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+- **Height**: h-16 (64px)
+- **Logo**: text-2xl font-bold text-blue-600
+- **Navigation Links**: text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md
+- **User Menu**: Relative dropdown with proper positioning
+
+### Responsive Design Requirements
+
+#### Breakpoint Strategy
+- **Mobile**: < 640px (sm) - Single column, stacked elements
+- **Tablet**: 640px - 1024px (md) - Two columns where appropriate
+- **Desktop**: > 1024px (lg) - Full layout with sidebars
+
+#### Mobile-First Implementation
+- **Question Cards**: Full width on mobile, grid on desktop
+- **Navigation**: Hamburger menu on mobile, full nav on desktop  
+- **Forms**: Single column, optimized touch targets (min 44px)
+- **Vote Buttons**: Larger touch targets on mobile
+- **Typography**: Readable sizes on all devices (min 16px base)
+
+## 🔧 Technical Implementation Requirements
+
+### Dependencies (Exact Versions)
+```json
+{
+  "name": "stackit-mvp",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "firebase": "^10.7.0",
+    "react-hook-form": "^7.43.0",
+    "@heroicons/react": "^2.0.0",
+    "react-hot-toast": "^2.4.0",
+    "date-fns": "^2.29.0",
+    "clsx": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "typescript": "^5.0.2",
+    "vite": "^5.0.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "eslint": "^8.45.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0"
+  }
+}
+```
+
+### Configuration Files (Copy Exactly)
+
+#### vite.config.ts
+```typescript
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+    host: true
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
+  }
+})
+```
+
+#### tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+```
+
+#### tailwind.config.js
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+      }
+    },
+  },
+  plugins: [],
+}
+```
+
+#### postcss.config.js
+```javascript
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+### Environment Variables Setup
+
+#### .env.example
+```
+VITE_FIREBASE_API_KEY=your_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain_here
+VITE_FIREBASE_PROJECT_ID=your_project_id_here
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket_here
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
+VITE_FIREBASE_APP_ID=your_app_id_here
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id_here
+```
+
+#### .env.local (Create with exact values)
+```
+VITE_FIREBASE_API_KEY=AIzaSyDnfD3C5jwyzZ3YslFBYFXYKnePvug5m6s
+VITE_FIREBASE_AUTH_DOMAIN=stackit-adc0b.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=stackit-adc0b
+VITE_FIREBASE_STORAGE_BUCKET=stackit-adc0b.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=116297476119
+VITE_FIREBASE_APP_ID=1:116297476119:web:bf33516fd9ee11008a1452
+VITE_FIREBASE_MEASUREMENT_ID=G-0W9H0VVS38
+```
+
+## 🚨 Critical Implementation Instructions
+
+### 1. Firebase Service Setup
+Create `src/services/firebase.ts` with proper configuration and error handling:
+- Initialize Firebase app with provided credentials
+- Export auth and db instances
+- Add connection state monitoring
+- Implement retry logic for failed connections
+
+### 2. Authentication Implementation
+Create complete authentication system:
+- AuthContext with user state management
+- Login/signup forms with validation
+- Protected route wrapper component
+- Persistent session handling
+- Proper error messages for auth failures
+
+### 3. Database Operations
+Implement CRUD operations for all entities:
+- Questions: create, read, update (author only)
+- Answers: create, read, update (author only)
+- Votes: create, read, update, delete (user only)
+- Users: create, read, update (self only)
+- Real-time listeners for live updates
+
+### 4. Form Validation
+Implement comprehensive validation:
+- Question title: 10-255 characters, required
+- Question description: 50+ characters, required
+- Tags: 1-5 tags, alphanumeric only
+- Answer content: 10+ characters, required
+- User registration: valid email, 6+ char password
+
+### 5. Error Handling
+Implement proper error handling:
+- Network errors with retry options
+- Authentication errors with clear messages
+- Validation errors with field-specific feedback
+- Database errors with user-friendly messages
+- Loading states for all async operations
+
+### 6. Real-time Features
+Implement live updates:
+- Vote counts update across all users instantly
+- New answers appear without page refresh
+- Question lists update when new questions added
+- Proper cleanup of listeners on component unmount
+
+## 📱 Responsive Design Implementation
+
+### Mobile Navigation
+- Hamburger menu for mobile devices
+- Touch-friendly button sizes (minimum 44px)
+- Proper spacing for thumb navigation
+- Swipe gestures for common actions
+
+### Layout Adaptations
+- Question cards: Stack on mobile, grid on desktop
+- Forms: Single column on mobile, optimized inputs
+- Vote buttons: Larger touch targets on mobile
+- Navigation: Collapsible menu, bottom action bar
+
+### Typography Scaling
+- Base font size: 16px minimum for mobile
+- Line height: 1.6 for readability
+- Heading hierarchy maintained across breakpoints
+- Proper contrast ratios for accessibility
+
+## 🔐 Security & Validation
+
+### Input Sanitization
+- Sanitize all user inputs before saving
+- Prevent XSS attacks in rich text content
+- Validate data types and formats
+- Implement rate limiting for form submissions
+
+### Firebase Security
+- Proper security rules for all collections
+- User authentication verification
+- Data validation at database level
+- Audit trails for sensitive operations
+
+### Privacy Protection
+- Minimal data collection approach
+- Secure password handling (Firebase handles)
+- User consent for data processing
+- Clear privacy indicators in UI
+
+## 🚀 Local Development Setup
+
+### Installation Instructions
+```bash
+# 1. Create project directory
+mkdir stackit-mvp
+cd stackit-mvp
+
+# 2. Initialize package.json and install dependencies
+npm init -y
+npm install [all dependencies from package.json]
+
+# 3. Create environment file
+cp .env.example .env.local
+# Edit .env.local with provided Firebase credentials
+
+# 4. Start development server
+npm run dev
+
+# 5. Open browser
+open http://localhost:5173
+```
+
+### Development Workflow
+1. **Setup Phase**: Install dependencies, configure environment
+2. **Authentication**: Build login/signup system first
+3. **Core Features**: Questions, answers, voting in that order
+4. **Polish Phase**: UI improvements, error handling, testing
+5. **Testing**: Manual testing of all user flows
+
+## ✅ Quality Assurance Requirements
+
+### Functionality Testing
+- [ ] User can register with email/password successfully
+- [ ] User can login with existing credentials
+- [ ] User can logout and session is cleared
+- [ ] User can create questions with proper validation
+- [ ] Questions appear in list immediately after creation
+- [ ] User can click on questions to view details
+- [ ] User can post answers to questions
+- [ ] Answers appear under questions immediately
+- [ ] User can vote on questions and answers
+- [ ] Vote counts update in real-time across users
+- [ ] Users cannot vote on their own content
+- [ ] All forms validate input properly
+- [ ] Error messages are clear and helpful
+- [ ] Loading states show during operations
+
+### UI/UX Testing
+- [ ] Design looks professional and modern
+- [ ] Layout is responsive on mobile devices
+- [ ] Touch targets are appropriate for mobile
+- [ ] Typography is readable on all screen sizes
+- [ ] Colors have sufficient contrast
+- [ ] Navigation is intuitive and clear
+- [ ] Forms are easy to fill out
+- [ ] Feedback is provided for all user actions
+
+### Performance Testing
+- [ ] Initial page load is under 3 seconds
+- [ ] Navigation between pages is smooth
+- [ ] Real-time updates work without lag
+- [ ] Forms submit within 2 seconds
+- [ ] Images and assets load efficiently
+- [ ] No memory leaks from listeners
+- [ ] Mobile performance is smooth
+
+### Security Testing
+- [ ] Users cannot access protected routes without login
+- [ ] Users cannot edit others' content
+- [ ] Form inputs are properly validated
+- [ ] Database security rules work correctly
+- [ ] Authentication tokens are handled securely
+
+## 🎪 Demo Preparation
+
+### Demo Data Setup
+Create sample data for demonstration:
+- 5-10 sample questions across different topics
+- 2-3 answers per question with varying quality
+- Realistic vote counts and user interactions
+- Test user accounts for demo purposes
+
+### Demo Script (3 minutes)
+1. **Landing Page** (30 seconds)
+   - Show clean question list interface
+   - Highlight responsive design
+
+2. **User Registration** (30 seconds)
+   - Quick signup process
+   - Immediate login state
+
+3. **Ask Question** (60 seconds)
+   - Fill out question form
+   - Show validation and submission
+   - Question appears in list
+
+4. **Answer & Vote** (60 seconds)
+   - Navigate to question detail
+   - Post an answer
+   - Demonstrate voting system
+   - Show real-time updates
+
+### Success Metrics
+- All core features work reliably
+- Professional appearance impresses judges
+- Mobile experience is smooth and intuitive
+- Real-time features work across multiple devices
+- No critical bugs during demonstration
+
+## 🎯 Final Deliverables
+
+Generate a complete, working StackIt Q&A Platform MVP that includes:
+
+1. **Complete Authentication System** - Registration, login, logout, protected routes
+2. **Question Management** - Create, list, view questions with tags and validation
+3. **Answer System** - Post and display answers with author attribution
+4. **Voting Mechanism** - Upvote/downvote with real-time count updates
+5. **Responsive Design** - Mobile-first, professional appearance
+6. **Error Handling** - Proper validation and user feedback
+7. **Real-time Updates** - Live vote counts and new content
+8. **Production Ready** - Clean code, proper structure, deployment ready
+
+**The final product should be:**
+- Immediately functional after setup
+- Professional in appearance and behavior
+- Demonstrable to judges without technical issues
+- Scalable foundation for additional features
+- Mobile-optimized for modern user expectations
+
+Create production-quality code that demonstrates technical excellence while being simple enough to complete within the time constraints. Focus on reliability, user experience, and impressive functionality that will win the hackathon.
