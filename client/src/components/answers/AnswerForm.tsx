@@ -82,7 +82,7 @@ export function AnswerForm({ questionId, onSuccess }: AnswerFormProps) {
 
   if (!user) {
     return (
-      <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
+      <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 text-center">
         <p className="text-gray-600 mb-4">You must be logged in to post an answer.</p>
         <Button 
           variant="outline" 
@@ -97,35 +97,32 @@ export function AnswerForm({ questionId, onSuccess }: AnswerFormProps) {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-gray-900 border border-gray-700 rounded-lg p-6">
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mb-4">
-          <Label htmlFor="content" className="sr-only">Answer content</Label>
-          <Textarea
-            id="content"
-            placeholder="Write your answer here..."
-            rows={8}
-            {...form.register('content')}
-            className={`resize-vertical ${form.formState.errors.content ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''}`}
-          />
-          {form.formState.errors.content && (
-            <p className="text-red-600 text-sm mt-1">{form.formState.errors.content.message}</p>
-          )}
-          <p className="text-xs text-gray-500 mt-1">Minimum 10 characters required</p>
-        </div>
-        
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-500">
-            <span>{form.watch('content')?.length || 0} characters</span>
-          </div>
+        <Label htmlFor="content" className="sr-only">Answer content</Label>
+        <textarea
+          id="content"
+          placeholder="Write your answer here..."
+          rows={8}
+          {...form.register('content')}
+          className={`w-full bg-gray-800 border border-gray-600 rounded-lg p-4 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 min-h-32 resize-vertical ${form.formState.errors.content ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : ''}`}
+        />
+        {form.formState.errors.content && (
+          <p className="text-red-400 text-sm mt-1">{form.formState.errors.content.message}</p>
+        )}
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-sm text-gray-400">
+            {form.watch('content')?.length || 0} characters
+          </span>
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium"
           >
             {isSubmitting ? 'Posting...' : 'Post Your Answer'}
           </Button>
         </div>
+        <p className="text-xs text-gray-400 mt-2">Minimum 10 characters required</p>
       </form>
     </div>
   );

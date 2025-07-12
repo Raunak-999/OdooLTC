@@ -3,14 +3,31 @@ import { AnswerItem } from './AnswerItem';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
 import { pluralize } from '@/utils/formatters';
+import { Question } from '@/types';
 
 interface AnswerListProps {
   questionId: string;
   acceptedAnswerId?: string;
+  question?: Question; // Add question prop to get author info
+  onAnswerAccepted?: () => void; // Callback when answer is accepted
 }
 
-export function AnswerList({ questionId, acceptedAnswerId }: AnswerListProps) {
+export function AnswerList({ 
+  questionId, 
+  acceptedAnswerId, 
+  question,
+  onAnswerAccepted 
+}: AnswerListProps) {
   const { answers, loading, error } = useAnswers(questionId);
+
+  console.log('💬 AnswerList:', {
+    questionId,
+    acceptedAnswerId,
+    answersCount: answers.length,
+    questionAuthorId: question?.authorId,
+    loading,
+    error
+  });
 
   if (loading) {
     return (
@@ -52,11 +69,19 @@ export function AnswerList({ questionId, acceptedAnswerId }: AnswerListProps) {
     );
   }
 
-  // Sort answers: accepted first, then by vote count
+  // Sort answers: accepted first, then by vote count, then by date
   const sortedAnswers = [...answers].sort((a, b) => {
+    // Accepted answer always comes first
     if (a.id === acceptedAnswerId) return -1;
     if (b.id === acceptedAnswerId) return 1;
-    return b.voteCount - a.voteCount;
+    
+    // Then sort by vote count (highest first)
+    if (a.voteCount !== b.voteCount) {
+      return b.voteCount - a.voteCount;
+    }
+    
+    // Finally sort by date (newest first)
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
   return (
@@ -70,6 +95,9 @@ export function AnswerList({ questionId, acceptedAnswerId }: AnswerListProps) {
           key={answer.id}
           answer={answer}
           isAccepted={answer.id === acceptedAnswerId}
+          questionAuthorId={question?.authorId}
+          questionId={questionId}
+          onAccept={onAnswerAccepted}
         />
       ))}
     </div>

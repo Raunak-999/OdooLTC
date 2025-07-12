@@ -24,54 +24,47 @@ export function Sidebar() {
     .map(([tag]) => tag);
 
   return (
-    <aside className="lg:w-64 flex-shrink-0 space-y-6">
+    <aside className="lg:w-64 flex-shrink-0 space-y-6 bg-[var(--bg-tertiary)] p-6 rounded-xl shadow-md border border-[var(--border-default)]">
       {/* Quick Stats */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-section-title text-gray-900">Quick Stats</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <div className="bg-[var(--bg-secondary)] rounded-lg shadow p-4 border border-[var(--border-default)]">
+        <div className="text-lg font-semibold text-white mb-3">Quick Stats</div>
+        <div className="space-y-3">
           <div className="flex justify-between">
-            <span className="text-caption">Questions</span>
-            <span className="text-sm font-medium">{totalQuestions.toLocaleString()}</span>
+            <span className="text-[var(--text-muted)]">Questions</span>
+            <span className="text-sm font-medium text-white">{totalQuestions.toLocaleString()}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-caption">Answers</span>
-            <span className="text-sm font-medium">{totalAnswers.toLocaleString()}</span>
+            <span className="text-[var(--text-muted)]">Answers</span>
+            <span className="text-sm font-medium text-white">{totalAnswers.toLocaleString()}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-caption">Resolved</span>
-            <span className="text-sm font-medium">{resolvedQuestions.toLocaleString()}</span>
+            <span className="text-[var(--text-muted)]">Resolved</span>
+            <span className="text-sm font-medium text-white">{resolvedQuestions.toLocaleString()}</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Popular Tags */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-section-title text-gray-900">Popular Tags</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {popularTags.length > 0 ? (
-              popularTags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className="bg-blue-100 text-blue-800 cursor-pointer hover:bg-blue-200 transition-colors"
-                  onClick={() => {
-                    window.location.href = `/?search=${encodeURIComponent(tag)}`;
-                  }}
-                >
-                  {tag}
-                </Badge>
-              ))
-            ) : (
-              <div className="text-sm text-gray-500">No tags yet</div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-[var(--bg-secondary)] rounded-lg shadow p-4 border border-[var(--border-default)]">
+        <div className="text-lg font-semibold text-white mb-3">Popular Tags</div>
+        <div className="flex flex-wrap gap-2">
+          {popularTags.length > 0 ? (
+            popularTags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 bg-blue-900 text-blue-200 text-xs font-medium rounded-full border border-blue-800 cursor-pointer hover:bg-blue-800 transition-colors"
+                onClick={() => {
+                  window.location.href = `/?search=${encodeURIComponent(tag)}`;
+                }}
+              >
+                {tag}
+              </span>
+            ))
+          ) : (
+            <div className="text-sm text-[var(--text-muted)]">No tags yet</div>
+          )}
+        </div>
+      </div>
     </aside>
   );
 }

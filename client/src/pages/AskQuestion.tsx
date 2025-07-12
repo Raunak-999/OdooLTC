@@ -18,7 +18,7 @@ export default function AskQuestion() {
           <Card>
             <CardHeader>
               <CardTitle>
-                <h1 className="text-section-title text-gray-900">Ask a Question</h1>
+                <h1 className="text-2xl font-bold text-blue-500 mb-6">Ask a Question</h1>
               </CardTitle>
             </CardHeader>
             <CardContent>

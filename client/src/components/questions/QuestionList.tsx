@@ -2,15 +2,18 @@ import { useQuestions } from '@/hooks/useQuestions';
 import { QuestionCard } from './QuestionCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
+import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { useMemo } from 'react';
 
 interface QuestionListProps {
   searchQuery?: string;
   sortBy?: 'newest' | 'oldest' | 'most-voted' | 'most-answered' | 'unanswered';
+  questions?: any[]; // Accept questions as a prop for pagination
 }
 
-export function QuestionList({ searchQuery, sortBy = 'newest' }: QuestionListProps) {
-  const { questions, loading, error } = useQuestions();
+export function QuestionList({ searchQuery, sortBy = 'newest', questions: propQuestions }: QuestionListProps) {
+  const { questions: hookQuestions, loading, error } = useQuestions();
+  const questions = propQuestions || hookQuestions;
 
   const filteredAndSortedQuestions = useMemo(() => {
     let filtered = questions;
@@ -21,7 +24,7 @@ export function QuestionList({ searchQuery, sortBy = 'newest' }: QuestionListPro
       filtered = questions.filter(question => 
         question.title.toLowerCase().includes(query) ||
         question.description.toLowerCase().includes(query) ||
-        question.tags.some(tag => tag.toLowerCase().includes(query))
+        question.tags.some((tag: string) => tag.toLowerCase().includes(query))
       );
     }
 
@@ -111,7 +114,18 @@ export function QuestionList({ searchQuery, sortBy = 'newest' }: QuestionListPro
   return (
     <div className="space-y-4">
       {filteredAndSortedQuestions.map((question) => (
-        <QuestionCard key={question.id} question={question} />
+        <ErrorBoundary 
+          key={question.id} 
+          fallback={
+            <div className="bg-white rounded-lg border border-red-200 p-6">
+              <div className="text-red-600 text-center">
+                <p>Unable to display this question</p>
+              </div>
+            </div>
+          }
+        >
+          <QuestionCard question={question} />
+        </ErrorBoundary>
       ))}
     </div>
   );

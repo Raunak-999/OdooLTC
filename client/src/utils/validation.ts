@@ -11,8 +11,6 @@ export function validateQuestion(title: string, description: string, tags: strin
 
   if (!description.trim()) {
     errors.description = 'Description is required';
-  } else if (description.trim().length < 50) {
-    errors.description = 'Description must be at least 50 characters';
   }
 
   if (tags.length === 0) {
@@ -32,8 +30,6 @@ export function validateAnswer(content: string) {
 
   if (!content.trim()) {
     errors.content = 'Answer content is required';
-  } else if (content.trim().length < 10) {
-    errors.content = 'Answer must be at least 10 characters';
   }
 
   return {

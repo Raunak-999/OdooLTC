@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { signupUser } from '@/services/auth';
+import { useAuth } from '@/hooks/useAuth';
 import { validateEmail, validatePassword } from '@/utils/validation';
 import { useToast } from '@/hooks/use-toast';
 
@@ -29,6 +29,7 @@ interface SignupFormProps {
 
 export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
   const [, setLocation] = useLocation();
+  const { signup } = useAuth();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -60,7 +61,7 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
 
     setIsSubmitting(true);
     try {
-      await signupUser(data.email, data.password, data.displayName);
+      await signup(data.email, data.password, data.displayName);
       
       toast({
         title: "Welcome to StackIt!",

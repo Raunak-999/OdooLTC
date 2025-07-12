@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { loginUser } from '@/services/auth';
+import { useAuth } from '@/hooks/useAuth';
 import { validateEmail, validatePassword } from '@/utils/validation';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,6 +24,7 @@ interface LoginFormProps {
 
 export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
   const [, setLocation] = useLocation();
+  const { login } = useAuth();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,32 +37,41 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    console.log('🔑 LoginForm: Login attempt started for:', data.email);
+    
     if (!validateEmail(data.email)) {
+      console.log('🔑 LoginForm: Email validation failed');
       form.setError('email', { message: 'Please enter a valid email address' });
       return;
     }
 
     if (!validatePassword(data.password)) {
+      console.log('🔑 LoginForm: Password validation failed');
       form.setError('password', { message: 'Password must be at least 6 characters' });
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await loginUser(data.email, data.password);
+      console.log('🔑 LoginForm: Calling login function');
+      await login(data.email, data.password);
+      console.log('🔑 LoginForm: Login function completed successfully');
       
       toast({
         title: "Welcome back!",
         description: "You have been successfully logged in.",
       });
 
+      console.log('🔑 LoginForm: Login successful, handling navigation');
       if (onSuccess) {
+        console.log('🔑 LoginForm: Calling onSuccess callback');
         onSuccess();
       } else {
+        console.log('🔑 LoginForm: Navigating to home page');
         setLocation('/');
       }
     } catch (error: any) {
-      console.error('Login error:', error);
+      console.error('🔑 LoginForm: Login error:', error);
       
       let errorMessage = 'Failed to sign in. Please try again.';
       if (error.code === 'auth/user-not-found') {
@@ -81,6 +91,7 @@ export function LoginForm({ onSuccess, onSwitchToSignup }: LoginFormProps) {
       });
     } finally {
       setIsSubmitting(false);
+      console.log('🔑 LoginForm: Login attempt completed');
     }
   };
 
