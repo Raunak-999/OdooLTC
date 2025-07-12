@@ -13,7 +13,7 @@ interface QuestionCardProps {
 
 export function QuestionCard({ question }: QuestionCardProps) {
   return (
-    <Card className="question-card transition-shadow cursor-pointer hover:shadow-lg">
+    <Card className="question-card transition-all duration-200 hover:shadow-lg hover:border-blue-200 border border-gray-200">
       <CardContent className="p-6">
         <div className="flex flex-col lg:flex-row gap-4">
           {/* Vote Section */}
@@ -28,7 +28,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-3">
               <Link href={`/questions/${question.id}`}>
-                <h3 className="text-card-title text-gray-900 hover:text-primary-600 transition-colors">
+                <h3 className="text-card-title text-gray-900 hover:text-blue-600 transition-colors font-semibold cursor-pointer">
                   {question.title}
                 </h3>
               </Link>

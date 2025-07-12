@@ -29,9 +29,9 @@ export function VoteButtons({
         variant="ghost"
         size="sm"
         className={cn(
-          "vote-button p-0 rounded-md hover:bg-gray-100 transition-all",
+          "vote-button p-1 rounded-md hover:bg-gray-100 transition-all border border-gray-200",
           buttonSize,
-          userVote?.voteType === 1 && "text-green-600 bg-green-50"
+          userVote?.voteType === 1 && "text-green-600 bg-green-50 border-green-200"
         )}
         onClick={upvote}
         disabled={loading}
@@ -39,13 +39,13 @@ export function VoteButtons({
         <ChevronUpIcon 
           className={cn(
             iconSize,
-            userVote?.voteType === 1 ? "text-green-600" : "text-gray-400 hover:text-green-600"
+            userVote?.voteType === 1 ? "text-green-600" : "text-gray-600 hover:text-green-600"
           )} 
         />
       </Button>
       
       <span className={cn(
-        "font-semibold text-gray-700 min-w-8 text-center",
+        "font-bold text-gray-900 min-w-8 text-center py-1",
         size === 'lg' ? "text-2xl" : "text-lg"
       )}>
         {voteCount}
@@ -55,9 +55,9 @@ export function VoteButtons({
         variant="ghost"
         size="sm"
         className={cn(
-          "vote-button p-0 rounded-md hover:bg-gray-100 transition-all",
+          "vote-button p-1 rounded-md hover:bg-gray-100 transition-all border border-gray-200",
           buttonSize,
-          userVote?.voteType === -1 && "text-red-600 bg-red-50"
+          userVote?.voteType === -1 && "text-red-600 bg-red-50 border-red-200"
         )}
         onClick={downvote}
         disabled={loading}
@@ -65,7 +65,7 @@ export function VoteButtons({
         <ChevronDownIcon 
           className={cn(
             iconSize,
-            userVote?.voteType === -1 ? "text-red-600" : "text-gray-400 hover:text-red-600"
+            userVote?.voteType === -1 ? "text-red-600" : "text-gray-600 hover:text-red-600"
           )} 
         />
       </Button>

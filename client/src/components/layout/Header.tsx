@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { SearchIcon, MenuIcon, UserIcon, LogOutIcon } from 'lucide-react';
+import { SearchIcon, MenuIcon, UserIcon, LogOutIcon, PlusIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -54,15 +54,15 @@ export function Header() {
           {/* Logo & Navigation */}
           <div className="flex items-center space-x-8">
             <Link href="/">
-              <h1 className="text-2xl font-bold text-primary-600 cursor-pointer">
+              <h1 className="text-2xl font-bold text-blue-600 cursor-pointer">
                 StackIt
               </h1>
             </Link>
             <nav className="hidden md:flex space-x-6">
-              <Link href="/" className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
               </Link>
-              <Link href="/questions" className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link href="/questions" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Questions
               </Link>
             </nav>
@@ -85,10 +85,12 @@ export function Header() {
           </div>
 
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 md:space-x-4">
             <Link href="/ask">
-              <Button className="bg-primary-600 hover:bg-primary-700">
-                Ask Question
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium flex items-center gap-2 text-sm md:text-base">
+                <PlusIcon className="h-4 w-4" />
+                <span className="hidden sm:inline">Ask Question</span>
+                <span className="sm:hidden">Ask</span>
               </Button>
             </Link>
 
